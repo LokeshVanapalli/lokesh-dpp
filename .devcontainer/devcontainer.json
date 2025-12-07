@@ -1,33 +1,20 @@
 {
-  "name": "DPP Devcontainer",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "context": ".."
+  "name": "DPP - Stable Devcontainer",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-18-bullseye",
+  "postCreateCommand": "bash .devcontainer/setup-dev-tools.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "pivotal.vscode-spring-boot",
+        "ms-vscode.vscode-typescript-next",
+        "ms-azuretools.vscode-docker",
+        "angular.ng-template",
+        "esbenp.prettier-vscode",
+        "eamodio.gitlens"
+      ]
+    }
   },
-  "context": "..",
-  "workspaceFolder": "/workspace",
-  "remoteUser": "vscode",
-  "features": {
-    "docker-in-docker": "1"
-  },
-  "postCreateCommand": "sudo chmod +x .devcontainer/scripts/*.sh && .devcontainer/scripts/post-create.sh",
-  "postStartCommand": ".devcontainer/scripts/post-start.sh",
-  "forwardPorts": [8080, 4200, 5432],
-  "extensions": [
-    "vscjava.vscode-java-pack",
-    "pivotal.vscode-spring-boot",
-    "redhat.vscode-yaml",
-    "ms-azuretools.vscode-docker",
-    "esbenp.prettier-vscode",
-    "angular.ng-template",
-    "ms-vscode.vscode-typescript-next",
-    "eamodio.gitlens"
-  ],
-  "settings": {
-    "terminal.integrated.shell.linux": "/bin/bash",
-    "editor.formatOnSave": true
-  },
-  "containerEnv": {
-    "MAVEN_OPTS": "-Xmx1024m"
-  }
+  "forwardPorts": [8080, 4200, 5432, 5050],
+  "remoteUser": "vscode"
 }
