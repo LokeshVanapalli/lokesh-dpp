@@ -1,0 +1,33 @@
+{
+  "name": "DPP Devcontainer",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "context": "..",
+  "workspaceFolder": "/workspace",
+  "remoteUser": "vscode",
+  "features": {
+    "docker-in-docker": "1"
+  },
+  "postCreateCommand": "sudo chmod +x .devcontainer/scripts/*.sh && .devcontainer/scripts/post-create.sh",
+  "postStartCommand": ".devcontainer/scripts/post-start.sh",
+  "forwardPorts": [8080, 4200, 5432],
+  "extensions": [
+    "vscjava.vscode-java-pack",
+    "pivotal.vscode-spring-boot",
+    "redhat.vscode-yaml",
+    "ms-azuretools.vscode-docker",
+    "esbenp.prettier-vscode",
+    "angular.ng-template",
+    "ms-vscode.vscode-typescript-next",
+    "eamodio.gitlens"
+  ],
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "editor.formatOnSave": true
+  },
+  "containerEnv": {
+    "MAVEN_OPTS": "-Xmx1024m"
+  }
+}

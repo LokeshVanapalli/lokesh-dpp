@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: dpp_db
+      POSTGRES_USER: dpp
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/dpp_db
+      SPRING_DATASOURCE_USERNAME: dpp
+      SPRING_DATASOURCE_PASSWORD: secret
+      JWT_SECRET: verysecretkeychangemeveryoneplease_use_long_key_which_is_safe_32chars
+    depends_on:
+      - db
+
+volumes:
+  db_data:

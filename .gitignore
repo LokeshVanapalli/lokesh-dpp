@@ -1,0 +1,32 @@
+# macOS
+.DS_Store
+
+# Node
+node_modules/
+dist/
+npm-debug.log
+
+# Angular
+frontend/dist/
+frontend/node_modules/
+frontend/.angular/
+
+# Maven / Java
+backend/target/
+!.mvn/wrapper/maven-wrapper.jar
+**/pom.xml.tag
+**/pom.xml.releaseBackup
+**/pom.xml.versionsBackup
+dependency-reduced-pom.xml
+release.properties
+
+# IntelliJ / VSCode
+.idea/
+.vscode/
+*.iml
+
+# OS files
+Thumbs.db
+
+# Devcontainer state
+.devcontainer/.cache/
