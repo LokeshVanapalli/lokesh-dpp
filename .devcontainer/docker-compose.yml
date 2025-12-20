@@ -23,5 +23,16 @@ services:
     depends_on:
       - dpp-postgres
 
+  workspace:
+    image: mcr.microsoft.com/devcontainers/javascript-node:1-18-bullseye
+    # Mount the repository into the workspace container. Compose file lives in .devcontainer/, so
+    # use ".." to reference the repository root.
+    volumes:
+      - ..:/workspaces/lokesh-dpp:cached
+    depends_on:
+      - dpp-postgres
+      - pgadmin
+    tty: true
+
 volumes:
   dpp_db_data:

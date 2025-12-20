@@ -1,6 +1,8 @@
 {
   "name": "DPP - Stable Devcontainer",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-18-bullseye",
+  "dockerComposeFile": [ "docker-compose.yml" ],
+  "service": "workspace",
+  "workspaceFolder": "/workspaces/lokesh-dpp",
   "postCreateCommand": "bash .devcontainer/setup-dev-tools.sh",
   "customizations": {
     "vscode": {
