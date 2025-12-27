@@ -1,23 +1,20 @@
 {
-  "name": "DPP Fullstack Dev",
-
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-
-  "features": {
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "20"
-    },
-    "ghcr.io/devcontainers/features/java:1": {
-      "version": "17",
-      "installMaven": true,
-      "installGradle": false
-    },
-    "ghcr.io/devcontainers/features/postgres-client:1": {}
+  "name": "DPP - Stable Devcontainer",
+  "build": {
+    "dockerfile": "Dockerfile"
   },
-
-  "postCreateCommand": "npm install -g @angular/cli",
-
+  "workspaceFolder": "/workspaces/lokesh-dpp",
   "forwardPorts": [8080, 4200],
-
-  "remoteUser": "vscode"
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "pivotal.vscode-spring-boot",
+        "angular.ng-template",
+        "esbenp.prettier-vscode",
+        "eamodio.gitlens"
+      ]
+    }
+  }
 }
