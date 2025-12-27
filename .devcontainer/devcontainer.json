@@ -8,24 +8,14 @@
       "version": "20"
     },
     "ghcr.io/devcontainers/features/java:1": {
-      "version": "17"
+      "version": "17",
+      "installMaven": true,
+      "installGradle": false
     },
-    "ghcr.io/devcontainers/features/maven:1": {},
     "ghcr.io/devcontainers/features/postgres-client:1": {}
   },
 
   "postCreateCommand": "npm install -g @angular/cli",
-
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "vscjava.vscode-java-pack",
-        "angular.ng-template",
-        "esbenp.prettier-vscode",
-        "eamodio.gitlens"
-      ]
-    }
-  },
 
   "forwardPorts": [8080, 4200],
 
