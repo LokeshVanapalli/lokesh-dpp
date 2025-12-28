@@ -11,43 +11,58 @@ import java.security.Key;
 
 @Component
 public class JwtTokenProvider {
+
     private final Key key;
     private final long jwtExpirationInMs;
 
-    public JwtTokenProvider(@Value("${app.jwt.secret}") String secret, 
-                            @Value("${app.jwt.jwtExpirationInMs}") long jwtExpirationInMs) {
-            this.key = Keys.hmacShaKeyFor(secret.getBytes());
-            this.jwtExpirationInMs = jwtExpirationInMs;
+    public JwtTokenProvider(
+            @Value("${app.jwt.secret}") String secret,
+            @Value("${app.jwt.expiration-ms}") long jwtExpirationInMs) {
+
+        if (secret == null || secret.length() < 32) {
+            throw new IllegalArgumentException(
+                "JWT secret must be at least 32 characters long"
+            );
+        }
+
+        this.key = Keys.hmacShaKeyFor(secret.getBytes());
+        this.jwtExpirationInMs = jwtExpirationInMs;
     }
 
-    public String generateToken(String username){
-        Date now  = new Date();
-        Date expiredAt = new Date(now.getTime() + jwtExpirationInMs);
+    public String generateToken(String username) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
 
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(now)
-                .setExpiration(expiredAt)
-                .signWith(key, SignatureAlgorithm.HS256)
+                .setExpiration(expiryDate)
+                .setIssuer("dpp-backend")
+                .claim("type", "ACCESS")
+                .signWith(key)
                 .compact();
     }
 
-    public String getUsername(String token){
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+    public String getUsername(String token) {
+        return parseClaims(token).getSubject();
     }
 
-    public boolean validateToken(String token){
+    public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            parseClaims(token);
             return true;
-        } catch (JwtException | IllegalArgumentException e) {
+        } catch (JwtException | IllegalArgumentException ex) {
+            // log.warn("Invalid JWT token", ex);
             return false;
         }
     }
 
+    private Claims parseClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .setAllowedClockSkewSeconds(60)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
 }

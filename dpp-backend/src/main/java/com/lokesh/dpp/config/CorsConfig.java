@@ -11,18 +11,18 @@ import java.util.List;
 @Configuration
 public class CorsConfig {
 
-    @Bean
-    public CorsFilter corsFilter() {
-        CorsConfiguration config = new CorsConfiguration();
+    // @Bean
+    // public CorsFilter corsFilter() {
+    //     CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of("https://scaling-parakeet-7vrw7x99rj5phwq6v-4200.app.github.dev", "http://localhost:4200"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true);
+    //     config.setAllowedOrigins(List.of("https://scaling-parakeet-7vrw7x99rj5phwq6v-4200.app.github.dev", "http://localhost:4200"));
+    //     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    //     config.setAllowedHeaders(List.of("*"));
+    //     config.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
+    //     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    //     source.registerCorsConfiguration("/**", config);
 
-        return new CorsFilter(source);
-    }
+    //     return new CorsFilter(source);
+    // }
 }
