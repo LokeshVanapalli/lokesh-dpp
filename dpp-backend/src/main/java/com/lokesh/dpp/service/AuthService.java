@@ -1,5 +1,6 @@
 package com.lokesh.dpp.service;
 
+import com.lokesh.dpp.config.JwtTokenProvider;
 import com.lokesh.dpp.dto.AuthRequest;
 import com.lokesh.dpp.dto.AuthResponse;
 import com.lokesh.dpp.dto.RegisterRequest;
@@ -13,9 +14,11 @@ import java.util.Set;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthService(UserRepository userRepository) {
+    public AuthService(UserRepository userRepository, JwtTokenProvider jwtTokenProvider) {
         this.userRepository = userRepository;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     public AuthResponse login(AuthRequest req) {
@@ -27,7 +30,9 @@ public class AuthService {
             throw new RuntimeException("Invalid credentials");
         }
 
-        return new AuthResponse(null, "Login success");
+        String token = jwtTokenProvider.generateToken(user.getUsername());
+
+        return new AuthResponse(token, "Login success");
     }
 
     public User register(RegisterRequest req) {

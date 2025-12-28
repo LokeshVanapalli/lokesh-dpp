@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink],
   template: `
     <div class="app-shell">
       <nav class="nav">
@@ -17,7 +17,7 @@ import { RouterOutlet } from '@angular/router';
   `,
   styles: [`
     .nav { display:flex; gap:16px; padding:12px; background:#0b2545; color:white; }
-    .nav a { color: #fff; text-decoration:none; }
+    .nav a { color: #fff; text-decoration:none; cursor:pointer; }
     .main { padding:24px; }
   `]
 })

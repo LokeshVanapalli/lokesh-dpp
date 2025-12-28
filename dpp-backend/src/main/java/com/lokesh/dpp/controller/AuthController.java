@@ -3,6 +3,7 @@ package com.lokesh.dpp.controller;
 import com.lokesh.dpp.dto.AuthRequest;
 import com.lokesh.dpp.dto.AuthResponse;
 import com.lokesh.dpp.dto.RegisterRequest;
+import com.lokesh.dpp.dto.RegisterResponse;
 import com.lokesh.dpp.service.AuthService;
 import com.lokesh.dpp.model.User;
 import jakarta.validation.Valid;
@@ -18,9 +19,9 @@ public class AuthController {
     public AuthController(AuthService authService) { this.authService = authService; }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest req) {
+    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest req) {
         User u = authService.register(req);
-        return ResponseEntity.status(201).body(u.getUsername());
+        return ResponseEntity.status(201).body(new RegisterResponse(u.getUsername(), "Registration successful"));
     }
 
     @PostMapping("/login")
