@@ -1,1 +1,19 @@
-<p>register works!</p>
+<div class="login-card">
+    <h2>Register</h2>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div>
+            <label>Username</label>
+            <input formControlName="username" />
+        </div>
+        <div>
+            <label>Email</label>
+            <input type="email" formControlName="email" />
+        </div>
+        <div>
+            <label>Password</label>
+            <input type="password" formControlName="password" />
+        </div>
+        <div *ngIf="msg" class="error">{{ msg }}</div>
+        <button type="submit" [disabled]="loading">Register</button>
+    </form>
+</div>

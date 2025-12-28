@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth';
+import { RegisterResponse } from '../../../models/auth-model';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,7 @@ import { AuthService } from '../../../core/services/auth';
 export class RegisterComponent {
   form!: FormGroup;
   loading = false;
-  error = '';
+  msg: string = '';
 
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
     this.form = this.fb.group({
@@ -27,18 +28,24 @@ export class RegisterComponent {
   submit() {
     if (this.form.invalid) return;
     this.loading = true;
-    this.error = '';
 
     // getRawValue() returns the values with the shape we expect
     const payload = this.form.getRawValue() as { username: string; email: string; password: string };
-
+    console.log("Reg payload: ",payload);
+    
     this.auth.register(payload).subscribe({
-      next: () => {
+      next: (res) => {
         this.loading = false;
-        this.router.navigate(['/login']);
+        this.msg = (res as RegisterResponse).message;
+        console.log("registered: ", res);
+        console.log("msg: ", this.msg);
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 4000);
       },
       error: (err) => {
-        this.error = err?.error?.message || 'Registration failed';
+        console.log("registered ERR: ", err);
+        this.msg = err?.error?.message || 'Registration failed';
         this.loading = false;
       }
     });

@@ -31,9 +31,12 @@ export class LoginComponent {
 
     // use getRawValue() to get strongly typed values (non-null)
     const payload = this.form.getRawValue() as { username: string; password: string };
-
+    console.log("payload: ", payload);
+    
     this.auth.login(payload).subscribe({
       next: (res) => {
+        console.log("response: ", res);
+        
         this.auth.setToken(res.accessToken);
         this.router.navigate(['/dashboard']);
       },

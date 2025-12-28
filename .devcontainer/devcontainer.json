@@ -1,22 +1,20 @@
 {
   "name": "DPP - Stable Devcontainer",
-  "dockerComposeFile": [ "docker-compose.yml" ],
-  "service": "workspace",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   "workspaceFolder": "/workspaces/lokesh-dpp",
-  "postCreateCommand": "bash .devcontainer/setup-dev-tools.sh",
+  "forwardPorts": [8080, 4200],
+  "remoteUser": "vscode",
   "customizations": {
     "vscode": {
       "extensions": [
         "vscjava.vscode-java-pack",
         "pivotal.vscode-spring-boot",
-        "ms-vscode.vscode-typescript-next",
-        "ms-azuretools.vscode-docker",
         "angular.ng-template",
         "esbenp.prettier-vscode",
         "eamodio.gitlens"
       ]
     }
-  },
-  "forwardPorts": [8080, 4200, 5432, 5050],
-  "remoteUser": "vscode"
+  }
 }
