@@ -67,4 +67,10 @@ public class NoteServiceImpl implements NoteService {
         Note note = getUserNoteById(noteId);
         noteRepository.delete(note);
     }
+
+    @Override
+    public Page<Note> searchUserNotes(String keyword, Pageable pageable) {
+        return noteRepository.findByOwnerAndTitleContainingIgnoreCase(
+                getCurrentUser(), keyword, pageable);  
+        }
 }

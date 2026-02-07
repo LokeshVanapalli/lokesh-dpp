@@ -30,3 +30,16 @@
 - Do not commit secrets. Use environment variables or GitHub Secrets for deployment.
 - If you need persistent DB across Codespace rebuilds, configure volume mapping. The current devcontainer uses a Docker named volume `dpp_db_data` inside Codespace.
 
+## Knowledge Base Module
+
+- Secure, user-scoped notes
+- JWT-protected APIs
+- CRUD operations
+- Pagination & search
+- Service-layer authorization (no controller-level security)
+
+### Tech Stack
+- Spring Boot
+- Spring Security (JWT)
+- JPA / Hibernate
+- Angular (standalone)

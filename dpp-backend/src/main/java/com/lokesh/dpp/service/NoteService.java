@@ -15,4 +15,6 @@ public interface NoteService {
     Note updateNote(Long noteId, String title, String content);
 
     void deleteNote(Long noteId);
+
+    Page<Note> searchUserNotes(String keyword, Pageable pageable);
 }
