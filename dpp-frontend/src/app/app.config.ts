@@ -18,14 +18,16 @@ import { provideRouter } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { appRoutes } from './app.routes';
 import { AppComponent } from './app';
-import { AuthInterceptor } from './core/interceptors/auth-interceptor';
+import { AuthInterceptor } from './interceptors/auth-interceptor';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 export function appBootstrap() {
   bootstrapApplication(AppComponent, {
     providers: [
       importProvidersFrom(BrowserModule, HttpClientModule),
       provideRouter(appRoutes),
-      { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+      { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+      { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
     ]
   }).catch(err => console.error(err));
 }

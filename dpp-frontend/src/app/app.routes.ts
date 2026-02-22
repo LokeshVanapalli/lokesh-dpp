@@ -2,9 +2,9 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './features/auth/login/login';
 import { RegisterComponent } from './features/auth/register/register';
 import { DashboardComponent } from './features/dashboard/dashboard';
-import { AuthGuard } from './core/guards/auth-guard';
-import { NotesListComponent } from './notes/notes-list/notes-list.component';
-import { NoteFormComponent } from './notes/note-form/note-form.component';
+import { AuthGuard } from './guards/auth-guard';
+import { NotesListComponent } from './features/notes/notes-list/notes-list.component';
+import { NoteFormComponent } from './features/notes/note-form/note-form.component';
 
 export const appRoutes: Routes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

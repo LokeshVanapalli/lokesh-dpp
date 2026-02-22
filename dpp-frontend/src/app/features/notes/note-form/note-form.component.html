@@ -1,0 +1,21 @@
+<div>
+    <h2>{{ noteId ? 'Edit Note' : 'Create Note' }}</h2>
+    
+    <form (ngSubmit)="saveNote()">
+        <div>
+            <label>Title:</label>
+            <input [(ngModel)]="note.title" name="title" required />
+        </div>
+    
+        <div>
+            <label>Content:</label>
+            <textarea [(ngModel)]="note.content" name="content" required></textarea>
+        </div>
+    
+        <button type="submit">
+            {{ noteId ? 'Update' : 'Create' }}
+        </button>
+    
+        <button type="button" (click)="cancel()">Cancel</button>
+    </form>
+</div>

@@ -4,8 +4,13 @@ import com.lokesh.dpp.model.Note;
 import com.lokesh.dpp.model.User;
 import com.lokesh.dpp.repository.NoteRepository;
 import lombok.RequiredArgsConstructor;
+
+import java.time.Instant;
+
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
@@ -45,7 +50,16 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public Page<Note> getUserNotes(Pageable pageable) {
-        return noteRepository.findByOwner(getCurrentUser(), pageable);
+        Pageable sortedPageable;
+        try {
+            sortedPageable = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(Sort.Direction.DESC, "updatedAt"));
+        } catch (Exception e) {
+            sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
+        } 
+        return noteRepository.findByOwner(getCurrentUser(), sortedPageable);
     }
 
     @Override
@@ -56,9 +70,11 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public Note updateNote(Long noteId, String title, String content) {
+
         Note note = getUserNoteById(noteId);
         note.setTitle(title);
         note.setContent(content);
+        note.setUpdatedAt(Instant.now());
         return noteRepository.save(note);
     }
 
@@ -70,7 +86,16 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public Page<Note> searchUserNotes(String keyword, Pageable pageable) {
+        Pageable sortedPageable;
+        try {
+            sortedPageable = PageRequest.of(
+                    pageable.getPageNumber(),
+                    pageable.getPageSize(),
+                    Sort.by(Sort.Direction.DESC, "updatedAt"));
+        } catch (Exception e) {
+            sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
+        }
         return noteRepository.findByOwnerAndTitleContainingIgnoreCase(
-                getCurrentUser(), keyword, pageable);  
+                getCurrentUser(), keyword, sortedPageable);  
         }
 }

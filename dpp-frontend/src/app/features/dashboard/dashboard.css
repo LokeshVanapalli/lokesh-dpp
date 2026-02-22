@@ -1,0 +1,34 @@
+.stats {
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    width: 200px;
+}
+
+.stat-card h3 {
+    margin: 0;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.stat-card p {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.recent-section {
+    margin-top: 20px;
+}
+
+.recent-note {
+    background: #f8fafc;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}

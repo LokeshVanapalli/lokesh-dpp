@@ -1,1 +1,19 @@
-<p>dashboard works!</p>
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<div class="stats">
+    <div class="stat-card">
+        <h3>Total Notes</h3>
+        <p>{{ totalNotes }}</p>
+    </div>
+</div>
+
+<div class="recent-section" *ngIf="recentNotes.length > 0">
+    <h3>Recent Notes</h3>
+    <div class="recent-note" *ngFor="let note of recentNotes">
+        <strong>{{ note.title }}</strong>
+        <p>{{ note.content }}</p>
+    </div>
+</div>
+
+<!-- <button routerLink="/notes">Go to Notes</button> -->

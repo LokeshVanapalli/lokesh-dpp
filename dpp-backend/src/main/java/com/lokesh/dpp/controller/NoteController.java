@@ -27,34 +27,48 @@ public class NoteController {
 
     private final NoteService noteService;
 
+    //Done
     @PostMapping
     public NoteResponseDto createNote(@Valid @RequestBody NoteRequestDto request){
         Note note = noteService.createNote(request.getTitle(), request.getContent());
         return mapToResponse(note);
     }
 
-    @GetMapping
-    public Page<NoteResponseDto> getNotes(Pageable pageable){
-        return noteService.getUserNotes(pageable)
-                .map(this::mapToResponse);
-    }
+    //Done
+    // @GetMapping
+    // public Page<NoteResponseDto> getNotes(Pageable pageable){
+    //     return noteService.getUserNotes(pageable)
+    //             .map(this::mapToResponse);
+    // }
 
     @GetMapping("/{id}")
     public NoteResponseDto getNote(@PathVariable Long id){
         return mapToResponse(noteService.getUserNoteById(id));
     }
 
-    @GetMapping("/search")
-    public Page<NoteResponseDto> searchNotes(@RequestParam String keyword, Pageable pageable){
-        return noteService.searchUserNotes(keyword, pageable)
-                .map(this::mapToResponse);
+    @GetMapping
+    public Page<NoteResponseDto> getNotes(
+            @RequestParam(required = false) String keyword,
+            Pageable pageable) {
+
+        Page<Note> notes;
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            notes = noteService.searchUserNotes(keyword, pageable);
+        } else {
+            notes = noteService.getUserNotes(pageable);
+        }
+
+        return notes.map(this::mapToResponse);
     }
 
+    //Done
     @PutMapping("/{id}")
     public NoteResponseDto updateNote(@PathVariable Long id, @Valid @RequestBody NoteRequestDto note){
         return mapToResponse(noteService.updateNote(id, note.getTitle(), note.getContent()));
     }
 
+    //Done
     @DeleteMapping("/{id}")
     public void deleteNote(@PathVariable Long id){
         noteService.deleteNote(id);

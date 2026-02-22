@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../core/services/auth';
+import { AuthService } from '../../../services/auth';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +37,7 @@ export class LoginComponent {
       next: (res) => {
         console.log("response: ", res);
         
-        this.auth.setToken(res.accessToken);
+        this.auth.handleLogin(res.accessToken);
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {

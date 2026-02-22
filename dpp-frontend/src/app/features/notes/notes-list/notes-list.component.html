@@ -1,0 +1,45 @@
+<div>
+    <div *ngIf="loading">Loading...</div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+    <div *ngIf="!loading && notes.length === 0">
+        <p>No notes yet. Create your first note.</p>
+    </div>
+    <div class="search-bar">
+        <input type="text" placeholder="Search by title..." [(ngModel)]="searchTerm" (keyup.enter)="onSearch()"/>
+        <!-- <button (click)="onSearch()">Search</button>
+        <button (click)="searchTerm=''; onSearch()" style="height: min-content;">Clear</button> -->
+    </div>
+    <button (click)="openCreate()">Add Note</button>
+    <div class="notes-list" *ngIf="!loading && notes.length > 0">
+        <div class="note-card" *ngFor="let note of notes">
+            <h3>{{ note.title }}</h3>
+            <p>created: {{ note.createdAt }}</p>
+            <p>last update: {{ note.updatedAt }}</p>
+            <p>{{ note.content }}</p>
+            <div class="actions">
+                <button (click)="editNote(note.id, note)" [disabled]="loading">Edit</button>
+                <button (click)="deleteNote(note.id)" [disabled]="loading" style="height: min-content;">Delete</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="editMode || createMode" class="modal" (click)="closeForm()">
+        <div (click)="$event.stopPropagation()">
+            <app-note-form [note]="selectedNote" [noteId]="selectedNoteId" (saved)="onNoteSaved($event)"
+                (cancelled)="closeForm()">
+            </app-note-form>
+        </div>
+    </div>
+    <div class="pagination" *ngIf="totalPages > 1">
+        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 0">
+            Prev
+        </button>
+    
+        <button *ngFor="let p of pages" (click)="changePage(p)" [class.active]="p === currentPage">
+            {{ p + 1 }}
+        </button>
+    
+        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages - 1">
+            Next
+        </button>
+    </div>
+</div>
